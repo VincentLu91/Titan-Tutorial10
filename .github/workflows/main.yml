@@ -21,6 +21,7 @@ jobs:
       run: |
         pip install flake8-nb
         flake8-nb helloworldTutorial10.ipynb
+
   deploy:  
     runs-on: ubuntu-latest
     strategy:
