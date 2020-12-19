@@ -1,0 +1,43 @@
+# This is a basic workflow to help you get started with Actions
+name: CI
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  lint:  
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+    steps:
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Linter
+      run: |
+        pip install flake8-nb
+        flake8-nb helloworld.ipynb
+  deploy:  
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+    steps:
+    - uses: actions/checkout@master
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Titan CLI
+      run: |
+        curl -sf https://install.akoios.com/beta | sudo sh
+    - name: Deploy notebook service with Titan
+      run: |
+        titan deploy --image scipy helloworld.ipynb
+      env:
+          TITAN_LOGIN: ${{ secrets.TITAN_LOGIN }}
+          TITAN_PASSWORD: ${{ secrets.TITAN_PASSWORD }}
