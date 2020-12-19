@@ -20,7 +20,7 @@ jobs:
     - name: Linter
       run: |
         pip install flake8-nb
-        flake8-nb helloworld.ipynb
+        flake8-nb helloworldTutorial10.ipynb
   deploy:  
     runs-on: ubuntu-latest
     strategy:
