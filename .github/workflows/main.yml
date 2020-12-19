@@ -37,7 +37,7 @@ jobs:
         curl -sf https://install.akoios.com/beta | sudo sh
     - name: Deploy notebook service with Titan
       run: |
-        titan deploy --image scipy helloworld.ipynb
+        titan deploy --image scipy helloworldTutorial10-checkpoint.ipynb
       env:
           TITAN_LOGIN: ${{ secrets.TITAN_LOGIN }}
           TITAN_PASSWORD: ${{ secrets.TITAN_PASSWORD }}
